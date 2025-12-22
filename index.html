@@ -353,6 +353,175 @@
             transform: translateY(0);
         }
 
+        /* زر التحكم بالعرض */
+        .scroll-trigger {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(45, 27, 78, 0.98), rgba(10, 14, 39, 0.98));
+            border: 2px solid var(--primary-gold);
+            border-left: none;
+            border-radius: 0 20px 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 5px 0 25px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .scroll-trigger:hover {
+            width: 60px;
+            box-shadow: 8px 0 35px rgba(212, 175, 55, 0.6);
+        }
+
+        .auto-scroll-control {
+            position: fixed;
+            left: -250px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: linear-gradient(135deg, rgba(45, 27, 78, 0.98), rgba(10, 14, 39, 0.98));
+            border: 2px solid var(--primary-gold);
+            border-left: none;
+            border-radius: 0 20px 20px 0;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 5px 0 40px rgba(212, 175, 55, 0.4);
+            width: 250px;
+            transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .auto-scroll-control.show {
+            left: 0;
+        }
+
+        .control-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--primary-gold);
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--warm-orange);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg);
+            color: var(--primary-gold);
+        }
+
+        .play-pause-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--warm-orange), var(--primary-gold));
+            border: none;
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .play-pause-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.5);
+        }
+
+        .play-pause-btn:active {
+            transform: translateY(0);
+        }
+
+        .speed-control {
+            margin-top: 10px;
+        }
+
+        .speed-label {
+            color: var(--accent-teal);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .speed-value {
+            color: var(--primary-gold);
+            font-weight: 700;
+        }
+
+        .speed-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(212, 175, 55, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+            margin-bottom: 10px;
+        }
+
+        .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-gold);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .speed-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-gold);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            border: none;
+        }
+
+        .loop-indicator {
+            color: var(--glow-green);
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 10px;
+            padding: 5px;
+            background: rgba(57, 255, 20, 0.1);
+            border-radius: 8px;
+            display: none;
+        }
+
+        .loop-indicator.active {
+            display: block;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -365,11 +534,46 @@
             .countdown-numbers {
                 font-size: 2rem;
             }
+
+            .scroll-trigger {
+                width: 40px;
+                height: 60px;
+                font-size: 22px;
+            }
+
+            .auto-scroll-control {
+                width: 200px;
+                left: -200px;
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="stars" id="stars"></div>
+
+    <!-- زر التحكم -->
+    <div class="scroll-trigger" id="scrollTrigger">🎬</div>
+    
+    <div class="auto-scroll-control" id="autoScrollControl">
+        <div class="control-header">
+            <span>عرض تلقائي</span>
+            <button class="close-btn" id="closeBtn">✕</button>
+        </div>
+        <button class="play-pause-btn" id="playPauseBtn">
+            ▶ تشغيل العرض
+        </button>
+        <div class="speed-control">
+            <div class="speed-label">
+                <span>السرعة</span>
+                <span class="speed-value" id="speedValue">1x</span>
+            </div>
+            <input type="range" min="0.5" max="3" step="0.5" value="1" class="speed-slider" id="speedSlider">
+        </div>
+        <div class="loop-indicator" id="loopIndicator">
+            🔄 إعادة تلقائية
+        </div>
+    </div>
 
     <div class="container">
         <div class="hero">
@@ -492,6 +696,7 @@
     </div>
 
     <script>
+        // النجوم
         const starsContainer = document.getElementById('stars');
         for (let i = 0; i < 100; i++) {
             const star = document.createElement('div');
@@ -504,6 +709,7 @@
             starsContainer.appendChild(star);
         }
 
+        // الظهور عند التمرير
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -521,6 +727,7 @@
             observer.observe(el);
         });
 
+        // تأثيرات البطاقات
         document.querySelectorAll('.program-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
@@ -541,6 +748,7 @@
             });
         });
 
+        // تأثير زر الدعوة
         const ctaButton = document.querySelector('.cta-button');
         setInterval(() => {
             ctaButton.style.transform = 'scale(1.05)';
@@ -548,6 +756,87 @@
                 ctaButton.style.transform = 'scale(1)';
             }, 200);
         }, 3000);
+
+        // وظيفة العرض التلقائي
+        let isPlaying = false;
+        let scrollSpeed = 1;
+        let animationId = null;
+        
+        const scrollTrigger = document.getElementById('scrollTrigger');
+        const autoScrollControl = document.getElementById('autoScrollControl');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const speedSlider = document.getElementById('speedSlider');
+        const speedValue = document.getElementById('speedValue');
+        const loopIndicator = document.getElementById('loopIndicator');
+
+        // فتح القائمة
+        scrollTrigger.addEventListener('click', () => {
+            autoScrollControl.classList.add('show');
+            scrollTrigger.style.display = 'none';
+        });
+
+        // إغلاق القائمة
+        closeBtn.addEventListener('click', () => {
+            autoScrollControl.classList.remove('show');
+            scrollTrigger.style.display = 'flex';
+        });
+
+        function autoScroll() {
+            if (!isPlaying) return;
+            
+            const currentScroll = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            
+            if (currentScroll >= maxScroll - 10) {
+                loopIndicator.classList.add('active');
+                
+                setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    loopIndicator.classList.remove('active');
+                    
+                    setTimeout(() => {
+                        if (isPlaying) {
+                            animationId = requestAnimationFrame(autoScroll);
+                        }
+                    }, 1000);
+                }, 500);
+            } else {
+                window.scrollBy(0, scrollSpeed);
+                animationId = requestAnimationFrame(autoScroll);
+            }
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            
+            if (isPlaying) {
+                playPauseBtn.innerHTML = '⏸ إيقاف';
+                playPauseBtn.style.background = 'linear-gradient(135deg, #00BFA5, #008080)';
+                autoScroll();
+            } else {
+                playPauseBtn.innerHTML = '▶ تشغيل العرض';
+                playPauseBtn.style.background = 'linear-gradient(135deg, var(--warm-orange), var(--primary-gold))';
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                }
+            }
+        }
+
+        function updateSpeed() {
+            scrollSpeed = parseFloat(speedSlider.value);
+            speedValue.textContent = scrollSpeed + 'x';
+        }
+
+        playPauseBtn.addEventListener('click', togglePlay);
+        speedSlider.addEventListener('input', updateSpeed);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                togglePlay();
+            }
+        });
     </script>
 </body>
 </html>
